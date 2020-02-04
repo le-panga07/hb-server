@@ -1,0 +1,5 @@
+**/node_modules
+**/github.com
+**/golang.org
+**/hb-server
+**/.idea
