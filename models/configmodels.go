@@ -75,3 +75,9 @@ type BidResult struct {
 }
 
 type AuctionResult map[string]map[string][]BidResult
+
+type ParticipantLog struct {
+	ProviderId string `json:"id"`
+	ECC        string `json:"ecc"`
+	EPC        int64  `json:"epc"`
+}
