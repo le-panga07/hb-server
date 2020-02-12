@@ -41,6 +41,7 @@ func GetProvidersMap(AdslotProviderInf []*models.AdSlotProvider) map[int64]model
 				provider.Epc,
 				provider.Floor_price,
 				provider.Ecc,
+				provider.Pubid,
 			}
 
 			mapArray[provider.ProviderID] = adslotPlacementDetails
@@ -63,6 +64,7 @@ func GetProviders(Providers []*models.Provider) models.ProvidersInfMap {
 		provider := &models.Provider{
 			currProvider.ProviderID,
 			currProvider.Providername,
+			currProvider.EntryPoint,
 		}
 		providerList[currProvider.ProviderID] = provider
 	}
@@ -80,6 +82,7 @@ func GetAdSlots(AdslotsInf []*models.AdSlotsPlacement) models.AdslotListMap {
 			currAdslot.Size,
 			currAdslot.Name,
 			currAdslot.ProviderIds,
+			currAdslot.Pubid,
 		}
 
 		adSlotListMap[currAdslot.AdslotId] = adslot

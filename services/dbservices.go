@@ -15,13 +15,14 @@ func GetProviderConfigs(db *sql.DB, publisherID string) *models.Config {
 	publisher := GetPublisherInf(db, publisherID)
 
 	adSlotInf := GetAdSlotInf(db, publisherID)
-	fmt.Println("adSlotInf", len(adSlotInf))
 
 	providers := GetAllProvidersDetails(db, publisher)
-	fmt.Println("providers", len(providers))
 
 	adslotProvidersInf := GetAllProvidersAdSlotInf(db, providers, publisherID)
-	fmt.Println("adslotProvidersInf", len(adslotProvidersInf))
+
+	for _, name := range providers {
+		fmt.Println(name.Providername)
+	}
 
 	config := GetConfigsData(publisher, adSlotInf, providers, adslotProvidersInf)
 
@@ -32,17 +33,22 @@ func GetProviderConfigs(db *sql.DB, publisherID string) *models.Config {
 func GetAllProvidersAdSlotInf(db *sql.DB, Providers []*models.Provider, publisherID string) []*models.AdSlotProvider {
 	adSlotProvidersInf := make([]*models.AdSlotProvider, 0)
 	for _, provider := range Providers {
-		adSlotProvidersInf = append(adSlotProvidersInf, GetProviderSlotData(db, provider.Providername, publisherID))
+		fmt.Println("1 " + provider.Providername)
+		adSlotProvidersInf = append(adSlotProvidersInf, GetProviderSlotData(db, provider.Providername, publisherID)...)
+		fmt.Println("2 " + provider.Providername)
 	}
+	fmt.Println("adSlotProvidersInf len ", len(adSlotProvidersInf))
 	return adSlotProvidersInf
 }
 
 //GetProviderSlotData func
-func GetProviderSlotData(db *sql.DB, providerName string, publisherID string) *models.AdSlotProvider {
-	adSlotProvider := &models.AdSlotProvider{}
+func GetProviderSlotData(db *sql.DB, providerName string, publisherID string) []*models.AdSlotProvider {
+	adSlotProviders := make([]*models.AdSlotProvider, 0)
+
 	rows, _ := db.Query("SELECT * FROM  adSlotProvider_"+providerName+" WHERE pubid = ?", publisherID)
 	defer rows.Close()
 	for rows.Next() {
+		adSlotProvider := &models.AdSlotProvider{}
 		rows.Scan(
 			&adSlotProvider.Pubid,
 			&adSlotProvider.AdslotId,
@@ -52,8 +58,9 @@ func GetProviderSlotData(db *sql.DB, providerName string, publisherID string) *m
 			&adSlotProvider.Rev_share,
 			&adSlotProvider.ProviderID,
 		)
+		adSlotProviders = append(adSlotProviders, adSlotProvider)
 	}
-	return adSlotProvider
+	return adSlotProviders
 }
 
 //GetAllProvidersDetails func
@@ -78,6 +85,7 @@ func GetProviderInf(db *sql.DB, providerID string) *models.Provider {
 		rows.Scan(
 			&provider.ProviderID,
 			&provider.Providername,
+			&provider.EntryPoint,
 		)
 	}
 	return provider

@@ -45,11 +45,7 @@ func GetConfigMap(db *sql.DB) http.HandlerFunc {
 
 		config := services.GetProviderConfigs(db, publisherID)
 
-		//auctionResult := SendDataToNodeServer(config)
 		GetScriptFileFromNodeServer(res, config)
-
-		//res.Header().Set("Content-Type", "application/json")
-		//json.NewEncoder(res).Encode(auctionResult)
 
 	}
 	return http.HandlerFunc(fn)
@@ -84,40 +80,5 @@ func GetScriptFileFromNodeServer(res http.ResponseWriter, configs *models.Config
 
 	res.Header().Set("Content-Type", "text/javascript")
 	res.Write([]byte(body))
-
-}
-
-//SendDataToNodeServer func
-func SendDataToNodeServer(configs *models.Config) models.AuctionResult {
-	url := "http://localhost:3000/configs"
-	fmt.Println("URL:> s", url)
-
-	configsBuffer := new(bytes.Buffer)
-	json.NewEncoder(configsBuffer).Encode(configs)
-
-	requ, _ := http.NewRequest("POST", url, configsBuffer)
-
-	requ.Header.Set("X-Custom-Header", "goserver")
-	requ.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-
-	resp, e := client.Do(requ)
-	if e != nil {
-		panic(e)
-	}
-
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-
-	if err != nil {
-		panic(err)
-	}
-
-	auctionResult := make(models.AuctionResult)
-	err = json.Unmarshal(body, &auctionResult)
-
-	return auctionResult
 
 }

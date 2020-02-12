@@ -5,6 +5,7 @@ type Adslot struct {
 	Size        string `json:"size"`
 	Adslotname  string `json:"adslotname"`
 	ProviderIds string `json:"providersid"`
+	PubId       string `json:"pubid"`
 }
 
 type AdslotListMap map[int64]*Adslot
@@ -13,6 +14,7 @@ type ProvidersInfMap map[string]*Provider
 type Provider struct {
 	ProviderID   string `json:"id"`
 	Providername string `json:"providername"`
+	EntryPoint   string `json:"entrypoint"`
 }
 
 type ProvidersList struct {
@@ -26,6 +28,7 @@ type AdslotPlacementDetails struct {
 	Extplacementid int64   `json:"epc"`
 	FloorPrice     float32 `json:"bidprice"`
 	Extpublisherid string  `json:"ecc"`
+	PubId          string  `json:"pubid"`
 }
 
 type ProvidersMapInf map[string]*AdslotPlacementDetails
@@ -74,10 +77,30 @@ type BidResult struct {
 	Size       string  `json:"size"`
 }
 
-type AuctionResult map[string]map[string][]BidResult
+//Logging
 
-type ParticipantLog struct {
-	ProviderId string `json:"id"`
-	ECC        string `json:"ecc"`
-	EPC        int64  `json:"epc"`
+type BidResponse struct {
+	Pubid    string  `json:"pubid"`
+	BidPrice float32 `json:"bidPrice"`
+	Adcode   string  `json:"adcode"`
+	ID       string  `json:"id"`
+	Ecc      string  `json:"ecc"`
+	Epc      int64   `json:"epc"`
+	Size     string  `json:"size"`
+	RevShare float32 `json:"revshare"`
+	Status   string  `json:"status"`
 }
+
+type ProvidersBidResponse map[string]map[int64]BidResponse
+
+//extending BidResponse
+
+type AuctionResponse struct {
+	BidResponse
+	Status              string  `json:"status"`
+	AuctionID           string  `json:"auctionId"`
+	Auction_placementID string  `json:"auction_placementID"`
+	SharedBid           float32 `json:"sharedBid"`
+}
+
+type AuctionResult map[int64]map[string][]AuctionResponse
