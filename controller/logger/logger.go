@@ -21,7 +21,7 @@ func Log(db *sql.DB, actionString string) http.HandlerFunc {
 
 		var err interface{}
 
-		if actionString == "logProviderResponse" {
+		if actionString == "providerResponseLog" {
 
 			providersReponses := make(models.ProvidersBidResponse)
 			err = decoder.Decode(&providersReponses)
@@ -30,24 +30,54 @@ func Log(db *sql.DB, actionString string) http.HandlerFunc {
 				fmt.Println("log inserted for auction result")
 			}
 
-		} else if actionString == "logAuctionParticipant" {
+		} else if actionString == "auctionParticipantLog" {
 
 			auctionResult := make(models.AuctionResult)
 			err = decoder.Decode(&auctionResult)
 
 			LogAuctionParticipantList(db, auctionResult)
 
+		} else if actionString == "auctionWinnerLog" {
+
+			var auctionWinnerList []models.AuctionResponse
+			//auctionResult := make(models.AuctionResult)
+			err = decoder.Decode(&auctionWinnerList)
+
+			LogAuctionWinner(db, auctionWinnerList)
+
 		}
 
 		if err != nil {
 			panic(err)
 		}
-		//fmt.Println(auctionResult)
+
 		res.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(res).Encode(&struct{ status string }{"OK"})
 
 	}
 	return http.HandlerFunc(fn)
+}
+
+func LogAuctionWinner(db *sql.DB, auctionWinnerList []models.AuctionResponse) bool {
+	for _, auctionWinner := range auctionWinnerList {
+		if !InsertAuctionWinnerLog(db, auctionWinner) {
+			return false
+		}
+	}
+	return true
+}
+
+func InsertAuctionWinnerLog(db *sql.DB, auctionWinner models.AuctionResponse) bool {
+
+	stmt, err := db.Prepare("INSERT INTO AuctionWinnerLog VALUES (?,?,?,?,?,?,?,?,?,?,?)")
+	_, err = stmt.Exec(auctionWinner.Pubid, auctionWinner.AuctionID, auctionWinner.Auction_placementID, auctionWinner.BidPrice, auctionWinner.ID,
+		auctionWinner.Ecc, auctionWinner.Epc, auctionWinner.Size, auctionWinner.RevShare, auctionWinner.SharedBid, auctionWinner.Status)
+
+	if err != nil {
+		panic(err)
+		return false
+	}
+	return true
 }
 
 func LogAuctionParticipantList(db *sql.DB, participantList models.AuctionResult) bool {

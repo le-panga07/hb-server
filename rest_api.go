@@ -25,9 +25,11 @@ func main() {
 	router.HandleFunc("/home", homecontroller.Index(db)).Methods("GET")
 	router.HandleFunc("/home/{id}", homecontroller.GetConfigMap(db)).Methods("GET")
 
-	router.HandleFunc("/logProviderResponse", logger.Log(db, "logProviderResponse")).Methods("POST")
+	router.HandleFunc("/providerResponseLog", logger.Log(db, "providerResponseLog")).Methods("POST")
 
-	router.HandleFunc("/logAuctionParticipant", logger.Log(db, "logAuctionParticipant")).Methods("POST")
+	router.HandleFunc("/auctionParticipantLog", logger.Log(db, "auctionParticipantLog")).Methods("POST")
+
+	router.HandleFunc("/auctionWinnerLog", logger.Log(db, "auctionWinnerLog")).Methods("POST")
 
 	http.ListenAndServe(":8080", router)
 }
