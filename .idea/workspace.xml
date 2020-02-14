@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f2999b14-1799-49f5-8932-fef6de7486be" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/logger/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/logger/logger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rest_api.go" beforeDir="false" afterPath="$PROJECT_DIR$/rest_api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/homecontroller/homecontroller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/homecontroller/homecontroller.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +43,11 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/js" />
+      <recent name="$PROJECT_DIR$/static/css" />
+      <recent name="$PROJECT_DIR$/views" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/static" />
       <recent name="$PROJECT_DIR$/views" />
@@ -69,11 +73,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="Adding Hb Server to git" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1663" y="-1288" key="CommitChangelistDialog2" timestamp="1581519027438">
-      <screen x="907" y="-1440" width="2560" height="1440" />
+    <state x="423" y="126" key="CommitChangelistDialog2" timestamp="1581570960674">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="1663" y="-1288" key="CommitChangelistDialog2/-1653.-1440.2560.1440/907.-1440.2560.1440/0.0.1680.1050@907.-1440.2560.1440" timestamp="1581519027438" />
-    <state x="423" y="126" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1581082222201" />
+    <state x="423" y="126" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1581570960674" />
     <state x="1380" y="-1321" key="DiffContextDialog" timestamp="1581516681162">
       <screen x="907" y="-1440" width="2560" height="1440" />
     </state>

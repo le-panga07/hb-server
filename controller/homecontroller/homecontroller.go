@@ -29,8 +29,8 @@ type DataRes struct {
 func Index(db *sql.DB) http.HandlerFunc {
 
 	fn := func(res http.ResponseWriter, req *http.Request) {
-		tpl := template.Must(template.ParseFiles("../hb-server/views/test.html"))
-		tpl.ExecuteTemplate(res, "test", nil)
+		tpl := template.Must(template.ParseFiles("../hb-server/views/template.html"))
+		tpl.ExecuteTemplate(res, "publisherPage", nil)
 	}
 	return http.HandlerFunc(fn)
 }
